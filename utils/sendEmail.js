@@ -2,7 +2,7 @@ const transporter = require("../config/nodemailer");
 
 const verifyEmail = async (email, uname, link) => {
   return await transporter.sendMail({
-    from: '"Thyroid" testing7988@gmail.com',
+    from: '"Thyroid" testing7988@gmail.com', 
     to: email,
     subject: "Confirm your email address",
     html: `

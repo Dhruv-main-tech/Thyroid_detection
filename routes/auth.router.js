@@ -12,5 +12,11 @@ router.post("/update", authController.update);
 router.post("/gpt", authController.gpt);
 router.post("/report", authController.report);
 router.post("/learn", authController.learn);
-
+router.get("/logout", authController.logout);
+router.get("/otp", authController.otp);
+router.post("/reset", authController.reset);
+router.post("/feedback", authController.feedback);
+router.post("/googlesignup", authController.googlesignup);
+router.post("/googlesignin", authController.googlesignin);
+router.post("/forgot", authController.forgot);
 module.exports = router;

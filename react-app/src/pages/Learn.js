@@ -52,14 +52,11 @@ const Learn = () => {
       setFileName({ fileName: udata?.condition });
       fetching();
     }
-  }, [udata]);
+  }, [udata, fileName]);
 
   return (
     <div className="home" style={{ padding: "50px" }}>
-      <div
-        className="form_container2"
-        style={{ maxWidth: "520px" }}
-      >
+      <div className="form_container2" style={{ maxWidth: "520px" }}>
         <div className="details_form"></div>
         <div>
           <pre style={{ color: "black" }}>{fileContent}</pre>

@@ -53,7 +53,6 @@ const Update = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(data);
       const res = await authApi.update(data);
       navigate("/logged");
       console.log(res);

@@ -24,5 +24,26 @@ const authApi = {
   learn: (data_f) => {
     return axiosClient.post("api/v1/auth/learn", data_f);
   },
+  logout: (data_o) => {
+    return axiosClient.get("api/v1/auth/logout", data_o);
+  },
+  otp: () => {
+    return axiosClient.get("api/v1/auth/otp");
+  },
+  reset: (data) => {
+    return axiosClient.post("api/v1/auth/reset", data);
+  },
+  feedback: (data) => {
+    return axiosClient.post("api/v1/auth/feedback", data);
+  },
+  googlesignup: (data) => {
+    return axiosClient.post("api/v1/auth/googlesignup", data);
+  },
+  googlesignin: (data) => {
+    return axiosClient.post("api/v1/auth/googlesignin", data);
+  },
+  forgot: (data) => {
+    return axiosClient.post("api/v1/auth/forgot", data);
+  },
 };
 export default authApi;

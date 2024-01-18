@@ -18,12 +18,7 @@ const Services = () => {
           <div className="row">
             <div className="col-md-4 col-sm-6 mb-4">
               <div className="card">
-                <div className="icon-box">
-                  <img
-                    decoding="async"
-                    src="../images/services/report_logo.png"
-                  />
-                </div>
+                <div className="icon-box"></div>
                 <div>
                   <h4>Report analysis</h4>
                   <p>
@@ -38,12 +33,7 @@ const Services = () => {
             </div>
             <div className="col-md-4 col-sm-6 mb-4">
               <div className="card">
-                <div className="icon-box">
-                  <img
-                    decoding="async"
-                    src="../images/services/diet_logo.png"
-                  />
-                </div>
+                <div className="icon-box"></div>
                 <div>
                   <h4>Diet modifier</h4>
                   <p>
@@ -58,12 +48,7 @@ const Services = () => {
             </div>
             <div className="col-md-4 col-sm-6 mb-4">
               <div className="card">
-                <div className="icon-box">
-                  <img
-                    decoding="async"
-                    src="../images/services/exercise_logo.png"
-                  />
-                </div>
+                <div className="icon-box"></div>
                 <div>
                   <h4>Exercise routine</h4>
                   <p>

@@ -46,20 +46,31 @@ const User_Profile = () => {
     navigate("/update");
   };
 
+
   return (
     <div className="home" style={{ padding: "50px" }}>
       <div className="form_container2" style={{ maxHeight: "460px" }}>
         <div className="form profile_form">
           <div className="profile_form">
-            <div>
+            <div style={{ display: "flex" }}>
               <h4
                 style={{
-                  justifyContent: "center",
+                  paddingLeft: "135px",
+                  paddingRight: "120px",
                   color: "black",
                 }}
               >
                 Profile
               </h4>
+              <a
+                href="/logged"
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                }}
+              >
+                x
+              </a>
             </div>
             <div style={{ display: "flex", paddingTop: "20px" }}>
               <label>Username:</label>

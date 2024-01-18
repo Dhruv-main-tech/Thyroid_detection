@@ -100,15 +100,26 @@ const Test = () => {
         style={{ maxWidth: "520px", height: "auto" }}
       >
         <div className="details_form">
-          <div>
+          <div style={{ display: "flex" }}>
             <h4
               style={{
-                justifyContent: "center",
                 color: "black",
+                paddingLeft: "110px",
+                paddingRight: "50px",
               }}
             >
               Enter patient details
             </h4>
+            <a
+              href="/logged"
+              style={{
+                color: "black",
+                textDecoration: "none",
+                paddingLeft: "60px",
+              }}
+            >
+              x
+            </a>
           </div>
           <div style={{ display: "block", justifyItems: "center" }}>
             <div style={{ display: "flex" }}>
@@ -233,7 +244,6 @@ const Test = () => {
                 setmdata((prev) => ({ ...prev, TSH: e.target.value }))
               }
             >
-              <label>TSH</label>
               <input type="number" placeholder="Enter TSH levels" />
             </div>
             <div
@@ -244,7 +254,6 @@ const Test = () => {
                 setmdata((prev) => ({ ...prev, T3: e.target.value }))
               }
             >
-              <label>T3</label>
               <input type="number" placeholder="Enter T3 levels" />
             </div>
             <div
@@ -255,7 +264,6 @@ const Test = () => {
                 setmdata((prev) => ({ ...prev, TT4: e.target.value }))
               }
             >
-              <label>TT4</label>
               <input type="number" placeholder="Enter TT4 levels" />
             </div>
             <div
@@ -266,7 +274,6 @@ const Test = () => {
                 setmdata((prev) => ({ ...prev, FTI: e.target.value }))
               }
             >
-              <label>FTI</label>
               <input type="number" placeholder="Enter FTI levels" />
             </div>
           </div>

@@ -8,10 +8,9 @@ import Signupform from "../components/Signupform";
 
 const HomeSection = () => {
   return (
-    <section className="home" id="home">
+    <section className="home" id="home"> 
       <div className="form_container">
         <Loginform />
-
         <Signupform />
       </div>
     </section>

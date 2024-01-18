@@ -309,7 +309,8 @@ p {
   transition: all 0.4s ease-out;
 }
 
-.form_container2 {
+.form_container2,
+.form_container3 {
   position: absolute;
   max-width: 400px;
   height: 520px;
@@ -321,13 +322,24 @@ p {
   background: #fff;
   padding: 25px;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.1);
   pointer-events: auto;
 }
 
 .report_form1,
 .report_form2 {
   display: none;
+}
+
+.reset_form {
+  display: none;
+}
+
+.form_container3.active1 .otp_form {
+  display: none;
+}
+
+.form_container3.active1 .reset_form {
+  display: block;
 }
 
 .form_container2.active1 .report_form1 {
@@ -360,8 +372,7 @@ p {
   transform: translate(-50%, -50%) scale(1);
 }
 
-.signup_form,
-.otp_form {
+.signup_form {
   display: none;
 }
 
@@ -373,20 +384,12 @@ p {
   display: none;
 }
 
-.form_container.active1 .otp_form {
-  display: none;
-}
-
 .form_container.active2 .signup_form {
   display: none;
 }
 
 .form_container.active2 .login_form {
   display: none;
-}
-
-.form_container.active2 .otp_form {
-  display: block;
 }
 
 .form_close {
@@ -687,10 +690,7 @@ home1 .footer_wrapper .link-widget li a:hover {
   text-decoration: none;
 }
 
-.otp_form {
-  display: none;
-  padding-top: 120px;
-}
+
 
 .google .img {
   src: "./assets/google.png";

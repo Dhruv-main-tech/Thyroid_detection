@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
+import GoogleSignin from "./Signingoogle";
 
 const Loginform = () => {
   const navigate = useNavigate();
@@ -98,11 +99,9 @@ const Loginform = () => {
           />
         </div>
         <div className="option_field">
-          <span className="checkbox">
-            <input type="checkbox" id="check" />
-            <label htmlFor="check">Remember me</label>
-          </span>
-          <a className="forgot_pw">Forgot password</a>
+          <a className="forgot_pw" href="/confirm">
+            Forgot password
+          </a>
         </div>
 
         <button className="login_button" id="123">
@@ -111,7 +110,12 @@ const Loginform = () => {
 
         <div className="login_signup">
           Don't have an account?{" "}
-          <a href="#" id="signup" onClick={SignupClick}>
+          <a
+            id="signup"
+            onClick={SignupClick}
+            style={{ color: "blue" }}
+            href="#"
+          >
             Signup
           </a>
         </div>
@@ -122,25 +126,7 @@ const Loginform = () => {
           <hr />
         </div>
 
-        <button
-          className="google"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <img
-            style={{
-              height: "30px",
-              width: "30px",
-              backgroundSize: "cover",
-              marginRight: "10px",
-            }}
-            alt="Google Logo"
-          />
-          <span className="google_text">Continue with Google</span>
-        </button>
+        <GoogleSignin/>
       </form>
     </div>
   );

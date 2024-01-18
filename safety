@@ -1,0 +1,150 @@
+/*
+
+import {Route, Routes} from 'react-router-dom';
+import './App.css';
+import Homepage from './pages/Homepage';
+import Loggedin from './pages/L_hpage';
+import Diet from './pages/Diet';
+import Workout from './pages/Workout';
+import Test from './pages/Test';
+
+
+function App() {
+  return (
+    <div className="App">
+      <Routes>
+        <Route path='/' element={<Homepage/>}></Route>
+        <Route path='/logged' element={<Loggedin/>}></Route>
+        <Route path='/diet' element={<Diet/>}></Route>
+        <Route path='/workout' element={<Workout/>}></Route>
+        <Route path='/test' element={<Test/>}></Route>
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+line 286 .signup_form, app.css
+
+app.get("/getResponse", async (req, res) => {
+  const response = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: "essay on global warming" }],
+    max_tokens: 750,
+  });
+  console.log(response.choices[0].message.content);
+});
+
+
+const [prompt, setprompt] = useState({
+    content: "",
+  });
+
+  const handleClick = async () => {
+    const gender =
+      udata.gender === "M" ? "male" : udata.gender === "F" ? "female" : "other";
+    const condition =
+      udata.condition === "NEGATIVE" ? "normal" : udata.condition;
+    const user_prompt = `Generate a diet plan for a ${udata?.age} year old of gender ${gender} of height ${udata?.height} cm, weight ${udata?.weight} kgs of ${condition} condition within 3000 characters or less`;
+    setprompt({
+      content: user_prompt,
+    });
+    try {
+      console.log(prompt);
+      const res = await authApi.gpt(prompt);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  gpt: async (req, res) => {
+    try {
+      const content1 = req.body.user_prompt;
+      console.log(content1);
+      const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "user",
+            content: userPrompt,
+          },
+        ],
+        max_tokens: 750,
+      });
+      console.log("yea");
+      return res.json({
+        success: true,
+        data: response.choices[0].message.content,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        problem: error,
+      });
+    }
+  }
+
+
+
+          <div className="otp_form">
+          {Message && Message?.text && (
+            <Alert variant={Message?.type}>{Message?.text}</Alert>
+          )}
+          <div className="input_box">
+            <input
+              type="text"
+              placeholder="Enter otp"
+              required
+              value={userinp}
+              onChange={(e) => setuserinp(e.target.value)}
+            ></input>
+          </div>
+          <button className="pro_sub_btn" onClick={handleverify}>
+            Verify
+          </button>
+        </div>
+        <div
+          className="reset_form"
+          style={{ color: "black", marginTop: "10px" }}
+        >
+          <h3 style={{ color: "black", paddingTop: "10px" }}>Reset password</h3>
+          <div className="input_box">
+            <input
+              type="password"
+              placeholder="Enter new password"
+              required
+              value={pass?.password}
+              onChange={(e) =>
+                setpass((prev) => ({ ...prev, password: e.target.value }))
+              }
+            ></input>
+          </div>
+          <div className="input_box">
+            <input
+              type="password"
+              placeholder="Confirm password"
+              required
+              value={pass?.confirm_password}
+              onChange={(e) =>
+                setpass((prev) => ({
+                  ...prev,
+                  confirm_password: e.target.value,
+                }))
+              }
+            ></input>
+          </div>
+          <button className="pro_sub_btn" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
+
+
+
+
+
+
+
+
+*/

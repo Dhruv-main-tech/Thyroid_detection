@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import authApi from "../apis/authApi";
+import GoogleSignup from "./Signupgoogle";
 
 const Signupform = () => {
   const [data, setData] = useState({
@@ -148,7 +149,7 @@ const Signupform = () => {
 
         <div className="login_signup">
           Already have an account?{" "}
-          <a href="#" id="login" onClick={LoginClick}>
+          <a id="login" onClick={LoginClick} style={{ color: "blue" }} href="#">
             {" "}
             Login
           </a>
@@ -160,26 +161,7 @@ const Signupform = () => {
           <hr />
         </div>
 
-        <button
-          className="google"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <img
-            src="../images/image8-2.jpg"
-            style={{
-              height: "30px",
-              width: "30px",
-              backgroundSize: "cover",
-              marginRight: "10px",
-            }}
-            alt="Google Logo"
-          />
-          <span className="google_text">Signup with Google</span>
-        </button>
+        <GoogleSignup/>
       </form>
     </div>
   );

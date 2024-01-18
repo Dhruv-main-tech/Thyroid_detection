@@ -1,5 +1,7 @@
-import React from "react";
-import L_Header from "../components/L_Header";
+import React, { useState } from "react";
+import LoggedHeader from "../components/L_Header";
+import authApi from "../apis/authApi";
+
 
 const ServicesSection = () => {
   return (
@@ -14,12 +16,7 @@ const ServicesSection = () => {
           <div className="row">
             <div className="col-md-4 col-sm-6 mb-4">
               <div className="card">
-                <div className="icon-box">
-                  <img
-                    decoding="async"
-                    src="../images/services/report_logo.png"
-                  />
-                </div>
+                <div className="icon-box"></div>
                 <div>
                   <h4>Report analysis</h4>
                   <p>
@@ -34,9 +31,7 @@ const ServicesSection = () => {
             </div>
             <div className="col-md-4 col-sm-6 mb-4">
               <div className="card">
-                <div className="icon-box">
-                  <img />
-                </div>
+                <div className="icon-box"></div>
                 <div>
                   <h4>Diet modifier</h4>
                   <p>
@@ -51,9 +46,7 @@ const ServicesSection = () => {
             </div>
             <div className="col-md-4 col-sm-6 mb-4">
               <div className="card">
-                <div className="icon-box">
-                  <img />
-                </div>
+                <div className="icon-box"></div>
                 <div>
                   <h4>Exercise routine</h4>
                   <p>
@@ -74,6 +67,15 @@ const ServicesSection = () => {
 };
 
 const ContactSection = () => {
+  const [feed, setfeed] = useState({
+    feedback: "",
+  });
+
+  const Feedback = async () => {
+    console.log(feed);
+    authApi.feedback(feed);
+  };
+
   return (
     <section id="contact" className="footer_wrapper wrapper">
       {
@@ -84,12 +86,12 @@ const ContactSection = () => {
               <div className="contact-info">
                 <ul className="list-unstyled p-0">
                   <li>
-                    <a href="#">
+                    <a href="/">
                       <i className="fa fa-phone me-3"></i>+1 222 3333
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="/">
                       <i className="fa fa-envelope me-3"></i>info@example.com
                     </a>
                   </li>
@@ -100,40 +102,22 @@ const ContactSection = () => {
               <h5>Feedback</h5>
               <div className="form-group mb-4">
                 <input
-                  type="email"
                   className="form-control bg-transparent"
                   placeholder="Type Here"
+                  value={feed?.feedback}
+                  onChange={(e) =>
+                    setfeed((prev) => ({ ...prev, feedback: e.target.value }))
+                  }
                 />
                 <button
                   type="submit"
                   className="main-btn rounded-2 mt-3 border-white text-white"
+                  onClick={Feedback}
                 >
                   Send
                 </button>
               </div>
-              <h5>Stay Connected</h5>
-              <ul className="social-network d-flex align-items-center p-0">
-                <li>
-                  <a href="#">
-                    <i className="fab fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-google-plus-g"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-vimeo-v"></i>
-                  </a>
-                </li>
-              </ul>
+              
             </div>
           </div>
         </div>
@@ -145,7 +129,7 @@ const ContactSection = () => {
 const Loggedin = () => {
   return (
     <>
-      <L_Header />
+      <LoggedHeader />
       <ServicesSection />
       <ContactSection />
     </>
