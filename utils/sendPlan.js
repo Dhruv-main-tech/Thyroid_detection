@@ -1,6 +1,6 @@
 const transporter = require("../config/nodemailer");
 
-const sendPlan = async (uname, email, body) => {
+const sendEmail = async (uname, email, body) => {
   return await transporter.sendMail({
     from: '"Thyroid" testing7988@gmail.com',
     to: email,
@@ -15,4 +15,4 @@ const sendPlan = async (uname, email, body) => {
   });
 };
 
-module.exports = { sendPlan };
+module.exports = { sendEmail };

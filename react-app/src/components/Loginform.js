@@ -99,7 +99,7 @@ const Loginform = () => {
           />
         </div>
         <div className="option_field">
-          <a className="forgot_pw" href="/confirm">
+          <a className="forgot_pw" href="/forget">
             Forgot password
           </a>
         </div>

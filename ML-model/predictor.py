@@ -30,7 +30,7 @@ def cleaning(df):
     return df
 
 
-model = joblib.load(r"D:\Thyroid-r\ML-model\xgmodel.pkl") 
+model = joblib.load(r"D:\Thyroid-r\ML-model\xgmodel.pkl")
 
 df = pd.DataFrame([input_data])
 

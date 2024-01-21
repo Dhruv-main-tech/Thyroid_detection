@@ -3,7 +3,7 @@ const router = express.Router();
 
 const authController = require("../controllers/auth.controller");
 
-router.post("/register", authController.register); 
+router.post("/register", authController.register);
 router.get("/verify", authController.verify);
 router.post("/login", authController.login);
 router.post("/profile", authController.profile);
@@ -18,5 +18,4 @@ router.post("/reset", authController.reset);
 router.post("/feedback", authController.feedback);
 router.post("/googlesignup", authController.googlesignup);
 router.post("/googlesignin", authController.googlesignin);
-router.post("/forgot", authController.forgot);
 module.exports = router;

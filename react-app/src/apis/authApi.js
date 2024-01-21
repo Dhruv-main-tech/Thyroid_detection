@@ -42,8 +42,5 @@ const authApi = {
   googlesignin: (data) => {
     return axiosClient.post("api/v1/auth/googlesignin", data);
   },
-  forgot: (data) => {
-    return axiosClient.post("api/v1/auth/forgot", data);
-  },
 };
 export default authApi;

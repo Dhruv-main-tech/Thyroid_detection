@@ -47,7 +47,7 @@ const Signupform = () => {
 
     try {
       const res = await authApi.register(data);
-      console.log(res); 
+      console.log(res);
       setMessage({
         type: "success",
         text: "Success, please check your mail",

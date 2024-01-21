@@ -1,7 +1,7 @@
 const OpenAI = require("openai");
 
 const openai = new OpenAI({
-  apiKey: process.env.CHAT_GPT_API_KEY,
+  apiKey: "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",
 });
 
 module.exports = openai;

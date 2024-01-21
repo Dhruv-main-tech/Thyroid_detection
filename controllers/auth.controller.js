@@ -7,7 +7,7 @@ const jwtUtils = require("../utils/jwt");
 const openai = require("../utils/chatgpt");
 const { spawn } = require("child_process");
 const fs = require("fs").promises;
-const { sendPlan } = require("../utils/sendPlan");
+const { sendEmail } = require("../utils/sendPlan");
 const { sendOtp } = require("../utils/sendOtp");
 const { OTP } = require("../utils/otp");
 const { sendFeedback } = require("../utils/sendFeedback");
@@ -219,7 +219,11 @@ const authController = {
         response.choices[0].message &&
         response.choices[0].message.content
       ) {
-        sendPlan(logged_user, user?.email, response.choices[0].message.content);
+        sendEmail(
+          logged_user,
+          user?.email,
+          response.choices[0].message.content
+        );
 
         return res.json({
           success: true,
@@ -305,7 +309,6 @@ const authController = {
       if (otp === "") {
         otp = OTP();
         const user = await User.findOne({ uname: logged_user });
-        console.log(user?.uname, user?.email);
         sendOtp(user?.uname, user?.email, otp);
       }
       res.json({
@@ -417,6 +420,7 @@ const authController = {
   googlesignin: async (req, res) => {
     try {
       const { displayName, email } = req.body;
+      logged_user = displayName;
 
       const user = await User.findOne({ email });
       if (!user) return res.json({ success: false, msg: "user not found" });
@@ -428,25 +432,6 @@ const authController = {
         msg: "finally",
         data: { user: userData },
       });
-    } catch (error) {
-      console.log(error);
-      return res.json({ success: false, msg: "failure" });
-    }
-  },
-
-  forgot: async (req, res) => {
-    try {
-      const { email } = req.body;
-
-      const user = await User.findOne({ email });
-
-      if (!user) {
-        return res.json({ success: false, msg: "User not found" });
-      }
-
-      logged_user = user?.uname;
-
-      return res.json({ success: true, user: logged_user });
     } catch (error) {
       console.log(error);
       return res.json({ success: false, msg: "failure" });
