@@ -4,6 +4,12 @@ import Home from "../components/Home";
 import LoadingSpinner from "../components/Spinner";
 
 const Workout = () => {
+  const check = async () => {
+    const res = await authApi.access();
+    if (res?.accessToken === "") navigate("/denied");
+  };
+  check();
+
   const [udata, setUdata] = useState({
     uname: "",
     email: "",
@@ -133,7 +139,7 @@ const Workout = () => {
             >
               Generate Workout Plan
             </button>
-            <LoadingSpinner loading={loading} color={"#005599"}/>
+            <LoadingSpinner loading={loading} color={"#005599"} />
             <h6>{userdata}</h6>
           </div>
         </div>

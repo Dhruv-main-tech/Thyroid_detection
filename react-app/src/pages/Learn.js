@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import authApi from "../apis/authApi";
 
 const Learn = () => {
+  const check = async () => {
+    const res = await authApi.access();
+    if (res?.accessToken === "") navigate("/denied");
+  };
+  check();
+
   const [fileContent, setFileContent] = useState("");
   const [fileName, setFileName] = useState({
     fileName: "",

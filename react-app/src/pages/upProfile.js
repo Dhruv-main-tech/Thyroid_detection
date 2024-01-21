@@ -3,6 +3,12 @@ import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const check = async () => {
+    const res = await authApi.access();
+    if (res?.accessToken === "") navigate("/denied");
+  };
+  check();
+  
   const navigate = useNavigate();
 
   const [data, setData] = useState({

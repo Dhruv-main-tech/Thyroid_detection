@@ -2,6 +2,12 @@ import { React, useEffect, useState } from "react";
 import authApi from "../apis/authApi";
 
 const Test = () => {
+  const check = async () => {
+    const res = await authApi.access();
+    if (res?.accessToken === "") navigate("/denied");
+  };
+  check();
+
   const handleCheckboxChange = (checkboxName) => {
     setmdata((prev) => ({
       ...prev,
