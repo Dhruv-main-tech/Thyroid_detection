@@ -12,7 +12,7 @@ const { sendOtp } = require("../utils/sendOtp");
 const { OTP } = require("../utils/otp");
 const { sendFeedback } = require("../utils/sendFeedback");
 
-let logged_user = "";
+let logged_user = "Dhruv Vayugundla";
 let otp = "";
 
 const authController = {

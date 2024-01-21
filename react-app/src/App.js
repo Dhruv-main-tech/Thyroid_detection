@@ -10,7 +10,6 @@ import User_Profile from "./pages/Profile";
 import Update from "./pages/Update";
 import Learn from "./pages/Learn";
 import Forgot from "./pages/Forgot";
-import VideoBackground from "./components/Videobackground";
 import Userconfirm from "./pages/Userconfirm";
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
         <Route path="/update" element={<Update />}></Route>
         <Route path="/learn" element={<Learn />}></Route>
         <Route path="/forget" element={<Forgot />}></Route>
-        <Route path="/video" element={<VideoBackground />}></Route>
         <Route path="/confirm" element={<Userconfirm />}></Route>
       </Routes>
     </div>
