@@ -10,8 +10,7 @@ import User_Profile from "./pages/Profile";
 import Update from "./pages/Update";
 import Learn from "./pages/Learn";
 import Forgot from "./pages/Forgot";
-import GoogleSignin from "./components/Signingoogle";
-import GoogleSignup from "./components/Signupgoogle";
+import AccessDenied from "./pages/AccessDenied";
 
 function App() {
   return (
@@ -27,8 +26,7 @@ function App() {
         <Route path="/update" element={<Update />}></Route>
         <Route path="/learn" element={<Learn />}></Route>
         <Route path="/forget" element={<Forgot />}></Route>
-        <Route path="/google1" element={<GoogleSignin />}></Route>
-        <Route path="/google2" element={<GoogleSignup />}></Route>
+        <Route path="/denied" element={<AccessDenied />}></Route>
       </Routes>
     </div>
   );

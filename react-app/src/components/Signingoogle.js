@@ -27,9 +27,11 @@ const GoogleSignin = () => {
   useEffect(() => {
     const signin = async () => {
       const res = await authApi.googlesignin(userData);
-      if (res?.data?.user?.gender === " ") {
-        navigate("/upprofile");
-      } else navigate("/logged");
+      if (res?.data?.accessToken !== "") {
+        if (res?.data?.user?.gender === " ") {
+          navigate("/upprofile");
+        } else navigate("/logged");
+      } else navigate("/denied");
     };
     if (userData?.displayName !== "") signin();
   }, [userData]);

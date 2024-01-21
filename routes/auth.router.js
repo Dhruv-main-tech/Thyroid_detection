@@ -18,4 +18,5 @@ router.post("/reset", authController.reset);
 router.post("/feedback", authController.feedback);
 router.post("/googlesignup", authController.googlesignup);
 router.post("/googlesignin", authController.googlesignin);
+router.get("/access", authController.access);
 module.exports = router;

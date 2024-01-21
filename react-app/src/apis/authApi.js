@@ -42,5 +42,8 @@ const authApi = {
   googlesignin: (data) => {
     return axiosClient.post("api/v1/auth/googlesignin", data);
   },
+  access:()=>{
+    return axiosClient.get("api/v1/auth/access");
+  }
 };
 export default authApi;

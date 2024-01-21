@@ -14,6 +14,7 @@ const { sendFeedback } = require("../utils/sendFeedback");
 
 let logged_user = "Dhruv Vayugundla";
 let otp = "";
+let accessToken = "";
 
 const authController = {
   register: async (req, res) => {
@@ -95,7 +96,7 @@ const authController = {
 
       const { password: pw, ...userData } = user?._doc;
 
-      const accessToken = jwtUtils.generateToken({ userId: user?._id });
+      accessToken = jwtUtils.generateToken({ userId: user?._id });
 
       logged_user = userData?.uname;
 
@@ -427,10 +428,23 @@ const authController = {
 
       const { password: pw, ...userData } = user?._doc;
 
+      accessToken = jwtUtils.generateToken({ userId: user?._id });
       return res.json({
         success: true,
         msg: "finally",
-        data: { user: userData },
+        data: { accessToken, user: userData },
+      });
+    } catch (error) {
+      console.log(error);
+      return res.json({ success: false, msg: "failure" });
+    }
+  },
+
+  access: async (req, res) => {
+    try {
+      return res.json({
+        accessToken,
+        success: true,
       });
     } catch (error) {
       console.log(error);
