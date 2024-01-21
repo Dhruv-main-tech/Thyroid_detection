@@ -1,7 +1,10 @@
 import { React, useEffect, useState } from "react";
 import authApi from "../apis/authApi";
+import { useNavigate } from "react-router-dom";
 
 const Test = () => {
+  const navigate = useNavigate();
+
   const check = async () => {
     const res = await authApi.access();
     if (res?.accessToken === "") navigate("/denied");

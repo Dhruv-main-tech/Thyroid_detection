@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import authApi from "../apis/authApi";
 import Home from "../components/Home";
 import LoadingSpinner from "../components/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const Diet = () => {
+  const navigate = useNavigate();
+
   const check = async () => {
     const res = await authApi.access();
     if (res?.accessToken === "") navigate("/denied");

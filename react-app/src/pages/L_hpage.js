@@ -4,7 +4,6 @@ import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
 
 const ServicesSection = () => {
-  const Test = () => {};
   return (
     <section id="services" className="services_wrapper wrapper">
       {
