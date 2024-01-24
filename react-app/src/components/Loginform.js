@@ -109,7 +109,7 @@ const Loginform = () => {
         </button>
 
         <div className="login_signup">
-          Don't have an account?{" "}
+          Don't have an account?
           <a
             id="signup"
             onClick={SignupClick}

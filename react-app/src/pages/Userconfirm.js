@@ -3,7 +3,7 @@ import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 
-const Userconfirm = () => {
+const Confirm = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({ email: "" });
@@ -75,4 +75,4 @@ const Userconfirm = () => {
   );
 };
 
-export default Userconfirm;
+export default Confirm;

@@ -1,18 +1,18 @@
 import React from "react";
-import { Route, Routes, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Homepage from "./pages/Homepage";
-import Loggedin from "./pages/L_hpage";
-import Diet from "./pages/Diet";
-import Workout from "./pages/Workout";
-import Test from "./pages/Test";
-import Profile from "./pages/upProfile";
-import User_Profile from "./pages/Profile";
-import Update from "./pages/Update";
-import Learn from "./pages/Learn";
-import Forgot from "./pages/Forgot";
-import Checking from "./pages/Checking";
-import Userconfirm from "./src/pages/Userconfirm";
+import Homepage from "./src/pages/Homepage";
+import Loggedin from "./src/pages/L_hpage";
+import Diet from "./src/pages/Diet";
+import Workout from "./src/pages/Workout";
+import Test from "./src/pages/Test";
+import Profile from "./src/pages/upProfile";
+import UserProfile from "./src/pages/Profile";
+import Update from "./src/pages/Update";
+import Learn from "./src/pages/Learn";
+import Forgot from "./src/pages/Forgot";
+import Checking from "./src/pages/Checking";
+import Confirm from "./src/pages/Userconfirm";
 
 function App() {
   return (
@@ -24,12 +24,12 @@ function App() {
         <Route path="/workout" element={<Workout />}></Route>
         <Route path="/test" element={<Test />}></Route>
         <Route path="/upprofile" element={<Profile />}></Route>
-        <Route path="/profile" element={<User_Profile />}></Route>
+        <Route path="/profile" element={<UserProfile />}></Route>
         <Route path="/update" element={<Update />}></Route>
         <Route path="/learn" element={<Learn />}></Route>
         <Route path="/forget" element={<Forgot />}></Route>
         <Route path="/check" element={<Checking />}></Route>
-        <Route path="/confirm" element={<Userconfirm />}></Route>
+        <Route path="/confirm" element={<Confirm />}></Route>
       </Routes>
     </div>
   );
