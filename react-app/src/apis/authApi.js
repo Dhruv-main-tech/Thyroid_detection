@@ -20,7 +20,7 @@ const authApi = {
   },
   report: (data_r) => {
     return axiosClient.post("api/v1/auth/report", data_r);
-  },
+  }, 
   learn: (data_f) => {
     return axiosClient.post("api/v1/auth/learn", data_f);
   },

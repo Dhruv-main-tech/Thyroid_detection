@@ -59,7 +59,7 @@ const Forgot = () => {
     }
     try {
       authApi.reset(pass);
-      navigate("/logged");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

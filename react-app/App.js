@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes, Switch } from "react-router-dom";
 import "./App.css";
 import Homepage from "./pages/Homepage";
 import Loggedin from "./pages/L_hpage";
@@ -10,8 +11,8 @@ import User_Profile from "./pages/Profile";
 import Update from "./pages/Update";
 import Learn from "./pages/Learn";
 import Forgot from "./pages/Forgot";
-import GoogleSignin from "./components/Signingoogle";
-import GoogleSignup from "./components/Signupgoogle";
+import Checking from "./pages/Checking";
+import Userconfirm from "./src/pages/Userconfirm";
 
 function App() {
   return (
@@ -27,8 +28,8 @@ function App() {
         <Route path="/update" element={<Update />}></Route>
         <Route path="/learn" element={<Learn />}></Route>
         <Route path="/forget" element={<Forgot />}></Route>
-        <Route path="/google1" element={<GoogleSignin />}></Route>
-        <Route path="/google2" element={<GoogleSignup />}></Route>
+        <Route path="/check" element={<Checking />}></Route>
+        <Route path="/confirm" element={<Userconfirm />}></Route>
       </Routes>
     </div>
   );
