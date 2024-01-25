@@ -250,7 +250,7 @@ const authController = {
       });
     }
   },
- 
+
   report: async (req, res) => {
     try {
       const report_data = req.body;
