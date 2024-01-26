@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 const Confirm = () => {
   const navigate = useNavigate();
 
-  const [data, setData] = useState({ email: "" });
+  const [data, setData] = useState({ user: "" });
 
   const [Message, setMessage] = useState({
     text: "",
@@ -14,6 +14,7 @@ const Confirm = () => {
   });
 
   const HandleClick = async () => {
+    console.log(data)
     const res = await authApi.forgot(data);
     if (res?.success === true) {
       navigate("/forget");
@@ -41,7 +42,7 @@ const Confirm = () => {
                 Reset
               </h4>
               <a
-                href="/logged"
+                href="/"
                 style={{
                   color: "black",
                   textDecoration: "none",
@@ -55,13 +56,12 @@ const Confirm = () => {
             )}
             <div className="pro_input_box">
               <input
-                type="email"
                 id="age"
                 placeholder="Enter username"
                 required
-                value={data?.email}
+                value={data?.user}
                 onChange={(e) =>
-                  setData((prev) => ({ ...prev, email: e.target.value }))
+                  setData((prev) => ({ ...prev, user: e.target.value }))
                 }
               />
             </div>

@@ -451,6 +451,15 @@ const authController = {
       return res.json({ success: false, msg: "failure" });
     }
   },
+
+  forgot: async (req, res) => {
+    try {
+      const { user } = req.body;
+      logged_user = user;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 module.exports = authController;

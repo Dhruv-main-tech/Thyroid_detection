@@ -20,7 +20,7 @@ const authApi = {
   },
   report: (data_r) => {
     return axiosClient.post("api/v1/auth/report", data_r);
-  }, 
+  },
   learn: (data_f) => {
     return axiosClient.post("api/v1/auth/learn", data_f);
   },
@@ -28,7 +28,7 @@ const authApi = {
     return axiosClient.get("api/v1/auth/logout", data_o);
   },
   otp: () => {
-    return axiosClient.get("api/v1/auth/otp");
+    return axiosClient.post("api/v1/auth/otp");
   },
   reset: (data) => {
     return axiosClient.post("api/v1/auth/reset", data);
@@ -42,8 +42,11 @@ const authApi = {
   googlesignin: (data) => {
     return axiosClient.post("api/v1/auth/googlesignin", data);
   },
-  access:()=>{
+  access: () => {
     return axiosClient.get("api/v1/auth/access");
-  }
+  },
+  forgot: (data) => {
+    return axiosClient.post("api/v1/auth/forgot", data);
+  },
 };
 export default authApi;
