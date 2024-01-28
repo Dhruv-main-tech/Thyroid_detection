@@ -54,7 +54,7 @@ const Update = () => {
     age: "",
     weight: "",
     height: "",
-    email: "",
+    uname: "",
   });
 
   const handleSubmit = async (e) => {
@@ -91,17 +91,17 @@ const Update = () => {
                   paddingBottom: "12px",
                 }}
               >
-                Email
+                Username
               </label>
               <div className="pro_input_box">
                 <input
-                  type="email"
+                  type="text"
                   id="age"
-                  placeholder={udata?.email}
+                  placeholder={udata?.uname}
                   required
-                  value={data?.email}
+                  value={data?.uname}
                   onChange={(e) =>
-                    setData((prev) => ({ ...prev, email: e.target.value }))
+                    setData((prev) => ({ ...prev, uname: e.target.value }))
                   }
                 />
               </div>

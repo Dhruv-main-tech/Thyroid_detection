@@ -1,8 +1,6 @@
 const bcrypt = require("bcrypt");
 const statusEnum = require("../enums/status");
 const User = require("../models/user.model");
-const { randomString } = require("../utils/random");
-const { verifyEmail } = require("../utils/sendEmail");
 const jwtUtils = require("../utils/jwt");
 const openai = require("../utils/chatgpt");
 const { spawn } = require("child_process");
@@ -11,10 +9,8 @@ const { sendEmail } = require("../utils/sendPlan");
 const { sendOtp } = require("../utils/sendOtp");
 const { OTP } = require("../utils/otp");
 const { sendFeedback } = require("../utils/sendFeedback");
-
-let logged_user = "Dhruv Vayugundla";
-let otp = "";
-let accessToken = "";
+const { setUser, getUser } = require("../user/set");
+const { start } = require("repl");
 
 const authController = {
   register: async (req, res) => {
@@ -29,20 +25,15 @@ const authController = {
 
       const hash = await bcrypt.hash(password, 10);
 
-      const code = randomString(20);
-
       const user = new User({
         email,
         password: hash,
         uname,
-        verificationCode: code,
       });
 
       const data = await user.save();
 
-      const link = `http://localhost:8080/api/v1/auth/verify?code=${code}`;
-
-      verifyEmail(email, uname, link);
+      setUser(uname, "");
 
       const { password: pw, ...response } = data?._doc;
 
@@ -54,22 +45,24 @@ const authController = {
 
   verify: async (req, res) => {
     try {
-      const { code } = req.query;
-      const user = await User.findOne({ verificationCode: code });
-
-      if (!user)
-        return res.status(400).json({ success: false, msg: "Code is invalid" });
-
-      user.status = statusEnum.ACTIVE;
-      user.verificationCode = "";
-
-      const data = await user.save();
-
-      const { password: pw, ...response } = data?._doc;
-
-      return res.json({ success: true, data: response });
+      var otp = "";
+      const { logged_user } = getUser();
+      const user = await User.findOne({ uname: logged_user });
+      if (user?.otp === "") {
+        otp = OTP();
+        sendOtp(user?.uname, user?.email, otp);
+        await User.updateOne({ uname: logged_user }, { $set: { otp } });
+      }
+      res.json({
+        success: true,
+        otp: otp,
+      });
     } catch (error) {
-      return res.status(500).json({ success: false, msg: error?.message });
+      console.error("Error in otp endpoint:", error);
+      res.json({
+        success: false,
+        problem: error,
+      });
     }
   },
 
@@ -98,7 +91,9 @@ const authController = {
 
       accessToken = jwtUtils.generateToken({ userId: user?._id });
 
-      logged_user = userData?.uname;
+      setUser(userData?.uname, accessToken);
+
+      //const { l_user, usertoken } = getUser();  refernce
 
       return res.json({
         check: userData?.gender,
@@ -114,7 +109,10 @@ const authController = {
     try {
       const { gender, age, height, weight } = req.body;
 
-      const result = await User.updateOne(
+      const { logged_user } = getUser();
+      const user = User.findOne({ uname: logged_user });
+
+      const result = await user.updateOne(
         { uname: logged_user },
         { $set: { gender, age, height, weight } }
       );
@@ -139,6 +137,7 @@ const authController = {
 
   disp: async (req, res) => {
     try {
+      const { logged_user } = getUser();
       const user = await User.findOne({ uname: logged_user });
 
       if (!user) {
@@ -157,7 +156,8 @@ const authController = {
 
   update: async (req, res) => {
     try {
-      const { age, email, weight, height } = req.body;
+      const { age, uname, weight, height } = req.body;
+      const { logged_user } = getUser();
 
       const user = User.findOne({ uname: logged_user });
 
@@ -169,8 +169,12 @@ const authController = {
 
       const result = await User.updateOne(
         { uname: logged_user },
-        { $set: { email, age, height, weight } }
+        { $set: { uname, age, height, weight } }
       );
+
+      const { usertoken } = getUser();
+
+      setUser(uname, usertoken);
 
       if (result.nModified === 0) {
         return res
@@ -193,6 +197,7 @@ const authController = {
   gpt: async (req, res) => {
     try {
       const userPrompt = req.body.user_prompt;
+      const { logged_user } = getUser();
 
       const user = await User.findOne({ uname: logged_user });
 
@@ -255,34 +260,66 @@ const authController = {
     try {
       const report_data = req.body;
       let condition = "";
-
+    
       const pythonScript = "ML-model\\predictor.py";
       const inputDataJson = JSON.stringify(report_data);
-
+    
       const pythonProcess = spawn("python", [pythonScript, inputDataJson]);
-
-      pythonProcess.stdout.on("data", (data) => {
-        const outputFromPython = JSON.parse(data.toString());
-        condition = outputFromPython?.condition;
-        User.updateOne({ uname: logged_user }, { $set: { condition } });
-        res.json({
-          success: true,
-          data: { message: "yes finally", condition: outputFromPython },
-        });
+    
+      pythonProcess.stdout.on("data", async (data) => {
+        try {
+          const outputFromPython = JSON.parse(data.toString());
+          condition = outputFromPython?.condition;
+    
+          const { logged_user } = getUser();
+    
+          const updatedUser = await User.findOneAndUpdate(
+            { uname: logged_user },
+            { $set: { condition: condition } },
+            { new: true } 
+          );
+    
+          if (updatedUser) {
+            res.json({
+              success: true,
+              data: {
+                message: "Update successful",
+                condition: condition,
+                user: updatedUser,
+              },
+            });
+          } else {
+            console.log("error");
+            res.status(404).json({
+              success: false,
+              data: { message: "User not found" },
+            });
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({
+            success: false,
+            data: { message: "Internal Server Error" },
+          });
+        }
       });
     } catch (error) {
+      console.error(error);
       return res.status(400).json({
         success: false,
-        data: { message: "nee abba ra" },
+        data: { message: "Error processing request" },
       });
     }
+    
+    
   },
 
   learn: async (req, res) => {
     const { fileName } = req.body;
     try {
+      console.log(fileName);
       const fileContent = await fs.readFile(
-        `D:/Thyroid-r/Learn_mores/${fileName}.txt`,
+        `D:/Thyroid-r/Backend/Learn_mores/${fileName}.txt`,
         "utf-8"
       );
       res.json({ content: fileContent });
@@ -294,10 +331,10 @@ const authController = {
 
   logout: async (req, res) => {
     try {
-      logged_user = "";
+      setUser("", "");
       res.json({
         success: true,
-        data: logged_user,
+        data: "",
       });
     } catch (error) {
       console.log(error);
@@ -307,14 +344,17 @@ const authController = {
 
   otp: async (req, res) => {
     try {
-      if (otp === "") {
-        otp = OTP();
-        const user = await User.findOne({ uname: logged_user });
+      const { logged_user } = getUser();
+      const user = await User.findOne({ uname: logged_user });
+      if (user?.otp === "") {
+        const otp = OTP();
         sendOtp(user?.uname, user?.email, otp);
+        await User.updateOne({ uname: logged_user }, { $set: { otp } });
+      } else {
       }
       res.json({
         success: true,
-        otp: otp,
+        otp: user?.otp,
       });
     } catch (error) {
       console.error("Error in otp endpoint:", error);
@@ -328,6 +368,7 @@ const authController = {
   reset: async (req, res) => {
     try {
       const { password } = req.body;
+      const { logged_user } = getUser();
 
       const user = await User.findOne({ uname: logged_user });
 
@@ -342,8 +383,7 @@ const authController = {
 
       const updatedUser = await User.findOneAndUpdate(
         { uname: logged_user },
-        { $set: { hash } },
-        { new: true }
+        { $set: { password: hash, otp: "" } }
       );
 
       return res.json({
@@ -362,6 +402,7 @@ const authController = {
   feedback: async (req, res) => {
     try {
       const { feedback } = req.body;
+      const { logged_user } = getUser();
 
       const user = await User.findOne({ uname: logged_user });
 
@@ -399,12 +440,9 @@ const authController = {
 
       const hash = await bcrypt.hash(uid, 10);
 
-      const code = "";
-
       const user = new User({
         email,
-        status: statusEnum.ACTIVE,
-        verificationCode: code,
+        status: "ACTIVE",
         uname: displayName,
         password: hash,
       });
@@ -420,8 +458,7 @@ const authController = {
 
   googlesignin: async (req, res) => {
     try {
-      const { displayName, email } = req.body;
-      logged_user = displayName;
+      const { email } = req.body;
 
       const user = await User.findOne({ email });
       if (!user) return res.json({ success: false, msg: "user not found" });
@@ -429,6 +466,9 @@ const authController = {
       const { password: pw, ...userData } = user?._doc;
 
       accessToken = jwtUtils.generateToken({ userId: user?._id });
+
+      setUser(user?.uname, accessToken);
+
       return res.json({
         success: true,
         msg: "finally",
@@ -442,8 +482,10 @@ const authController = {
 
   access: async (req, res) => {
     try {
+      const { usertoken } = getUser();
+
       return res.json({
-        accessToken,
+        accessToken: usertoken,
         success: true,
       });
     } catch (error) {
@@ -455,9 +497,19 @@ const authController = {
   forgot: async (req, res) => {
     try {
       const { user } = req.body;
-      logged_user = user;
+
+      setUser(user, "");
+
+      return res.json({
+        success: true,
+        msg: "successful",
+      });
     } catch (error) {
       console.log(error);
+      return res.json({
+        success: false,
+        mag: "User not found",
+      });
     }
   },
 };

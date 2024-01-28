@@ -22,9 +22,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(data);
-      const res = await authApi.profile(data);
-      console.log(res);
+      await authApi.profile(data);
       navigate("/logged");
     } catch (error) {
       console.log(error);

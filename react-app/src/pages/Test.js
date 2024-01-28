@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 const Test = () => {
   const navigate = useNavigate();
 
+  /*
   const check = async () => {
     const res = await authApi.access();
     if (res?.accessToken === "") navigate("/denied");
   };
-  check();
+  check();*/
 
   const handleCheckboxChange = (checkboxName) => {
     setmdata((prev) => ({
@@ -91,8 +92,8 @@ const Test = () => {
   const handleSubmit = async () => {
     try {
       const patient_condition = await authApi.report(mdata);
-      setpdata(patient_condition?.data?.condition?.condition);
-      if (patient_condition?.data?.condition?.condition === "NEGATIVE") {
+      setpdata(patient_condition?.data?.condition);
+      if (patient_condition?.data?.condition === "NEGATIVE") {
         negative();
       } else {
         Non_negative();

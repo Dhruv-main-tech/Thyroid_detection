@@ -3,6 +3,9 @@ const authApi = {
   register: (data_s) => {
     return axiosClient.post("api/v1/auth/register", data_s);
   },
+  verify:()=>{
+    return axiosClient.get("api/v1/auth/verify");
+  },
   login: (data_l) => {
     return axiosClient.post("api/v1/auth/login", data_l);
   },

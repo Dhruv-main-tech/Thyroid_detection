@@ -73,7 +73,7 @@ const Diet = () => {
           : "other";
       const condition =
         udata.condition === "NEGATIVE" ? "normal" : udata.condition;
-      const user_prompt = `Generate a diet plan for a ${udata?.age} year old of gender ${gender} of height ${udata?.height} cm, weight ${udata?.weight} kgs of ${condition} condition within 1800 characters or less start with here is a diet plan for`;
+      const user_prompt = `Generate a diet plan for a ${udata?.age} year old of gender ${gender} of height ${udata?.height} cm, weight ${udata?.weight} kgs of ${condition} condition within 1700 characters or less start with here is a diet plan for`;
 
       try {
         const res = await authApi.gpt({ user_prompt });

@@ -376,6 +376,10 @@ p {
   display: none;
 }
 
+.verify_form {
+  display: none;
+}
+
 .form_container.active1 .signup_form {
   display: block;
 }
@@ -390,6 +394,10 @@ p {
 
 .form_container.active2 .login_form {
   display: none;
+}
+
+.form_container.active2 .verify_form {
+  display: block;
 }
 
 .form_close {

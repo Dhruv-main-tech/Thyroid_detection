@@ -12,9 +12,7 @@ const Learn = () => {
   check();
 
   const [fileContent, setFileContent] = useState("");
-  const [fileName, setFileName] = useState({
-    fileName: "",
-  });
+  const [fileName, setFileName] = useState("");
   const [udata, setUdata] = useState({
     uname: "",
     email: "",
@@ -47,7 +45,7 @@ const Learn = () => {
   useEffect(() => {
     const fetching = async () => {
       try {
-        if (fileName.fileName !== "") {
+        if (fileName !== "") {
           const file = await authApi.learn(fileName);
           setFileContent(file?.content);
         }
@@ -56,12 +54,11 @@ const Learn = () => {
         setFileContent("");
       }
     };
-
     if (udata.condition !== "" && udata?.condition !== "NEGATIVE") {
       setFileName({ fileName: udata?.condition });
       fetching();
     }
-  }, [udata, fileName]);
+  }, [udata]);
 
   return (
     <div className="home" style={{ padding: "50px" }}>

@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
 
 const Forgot = () => {
-  let otp = "";
+  const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
   const [userinp, setuserinp] = useState("");
 
-  const receive_otp = async () => {
-    try {
-      const res = await authApi.otp();
-      otp = res?.otp;
-    } catch (error) {
-      console.error("Error in receive_otp:", error);
-    }
-  };
-  receive_otp();
+  useEffect(() => {
+    const receive_otp = async () => {
+      try {
+        const res = await authApi.otp();
+        setOtp(res?.otp);
+      } catch (error) {
+        console.error("Error in receive_otp:", error);
+      }
+    };
+    receive_otp();
+  }, []);
 
   const handleverify = () => {
     if (userinp === otp) {
