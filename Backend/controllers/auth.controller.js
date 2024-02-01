@@ -10,7 +10,6 @@ const { sendOtp } = require("../utils/sendOtp");
 const { OTP } = require("../utils/otp");
 const { sendFeedback } = require("../utils/sendFeedback");
 const { setUser, getUser } = require("../user/set");
-const { start } = require("repl");
 
 const authController = {
   register: async (req, res) => {
@@ -51,7 +50,10 @@ const authController = {
       if (user?.otp === "") {
         otp = OTP();
         sendOtp(user?.uname, user?.email, otp);
-        await User.updateOne({ uname: logged_user }, { $set: { otp } });
+        await User.updateOne(
+          { uname: logged_user },
+          { $set: { otp, status: statusEnum.ACTIVE } }
+        );
       }
       res.json({
         success: true,
@@ -256,72 +258,11 @@ const authController = {
     }
   },
 
-  report: async (req, res) => {
-    try {
-      const report_data = req.body;
-      let condition = "";
-    
-      const pythonScript = "ML-model\\predictor.py";
-      const inputDataJson = JSON.stringify(report_data);
-    
-      const pythonProcess = spawn("python", [pythonScript, inputDataJson]);
-    
-      pythonProcess.stdout.on("data", async (data) => {
-        try {
-          const outputFromPython = JSON.parse(data.toString());
-          condition = outputFromPython?.condition;
-    
-          const { logged_user } = getUser();
-    
-          const updatedUser = await User.findOneAndUpdate(
-            { uname: logged_user },
-            { $set: { condition: condition } },
-            { new: true } 
-          );
-    
-          if (updatedUser) {
-            res.json({
-              success: true,
-              data: {
-                message: "Update successful",
-                condition: condition,
-                user: updatedUser,
-              },
-            });
-          } else {
-            console.log("error");
-            res.status(404).json({
-              success: false,
-              data: { message: "User not found" },
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({
-            success: false,
-            data: { message: "Internal Server Error" },
-          });
-        }
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(400).json({
-        success: false,
-        data: { message: "Error processing request" },
-      });
-    }
-    
-    
-  },
-
   learn: async (req, res) => {
     const { fileName } = req.body;
     try {
       console.log(fileName);
-      const fileContent = await fs.readFile(
-        `D:/Thyroid-r/Backend/Learn_mores/${fileName}.txt`,
-        "utf-8"
-      );
+      const fileContent = await fs.readFile(`${fileName}.txt`, "utf-8");
       res.json({ content: fileContent });
     } catch (error) {
       console.error(error);
@@ -361,6 +302,23 @@ const authController = {
       res.json({
         success: false,
         problem: error,
+      });
+    }
+  },
+
+  get_otp: async (req, res) => {
+    try {
+      const { logged_user } = getUser();
+      const user = await User.findOne({ uname: logged_user });
+      return res.json({
+        success: true,
+        otp: user?.otp,
+      });
+    } catch (error) {
+      console.log(error);
+      res.json({
+        success: false,
+        msg: "failure",
       });
     }
   },
@@ -512,6 +470,8 @@ const authController = {
       });
     }
   },
+
+ 
 };
 
 module.exports = authController;

@@ -22,6 +22,11 @@ const SignupVerifyform = () => {
     formContainer.classList.remove("active1");
   }
 
+  function LoginClick2() {
+    const formContainer = document.querySelector(".form_container");
+    formContainer.classList.remove("active2");
+  }
+
   function VerifyClick() {
     const formContainer = document.querySelector(".form_container");
     formContainer.classList.remove("active1");
@@ -98,6 +103,7 @@ const SignupVerifyform = () => {
     try {
       if (Vdata?.input === otp) {
         setVMessage({ type: "success", text: "Email succesfully verified" });
+        LoginClick2();
       } else {
         setVMessage({ type: "danger", text: "Invalid otp" });
       }

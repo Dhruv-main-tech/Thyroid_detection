@@ -5,13 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
 
-  const check = async () => {
-    const res = await authApi.access();
-    if (res?.accessToken === "") navigate("/denied");
-  };
-  check();
-
-
   const [data, setData] = useState({
     age: "",
     weight: "",

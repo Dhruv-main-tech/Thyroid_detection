@@ -7,12 +7,6 @@ import { useNavigate } from "react-router-dom";
 const Workout = () => {
   const navigate = useNavigate();
 
-  const check = async () => {
-    const res = await authApi.access();
-    if (res?.accessToken === "") navigate("/denied");
-  };
-  check();
-
   const [udata, setUdata] = useState({
     uname: "",
     email: "",
@@ -106,6 +100,10 @@ const Workout = () => {
     }
   };
 
+  const ReturnHome = () => {
+    navigate("/logged");
+  };
+
   return (
     <div className="home">
       <div
@@ -113,12 +111,13 @@ const Workout = () => {
         style={{ height: "540px", maxWidth: "800px" }}
       >
         <a
-          href="/logged"
+          href=""
           style={{
             color: "black",
             textDecoration: "none",
             paddingLeft: "700px",
           }}
+          onClick={ReturnHome}
         >
           x
         </a>

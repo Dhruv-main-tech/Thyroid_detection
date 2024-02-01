@@ -4,6 +4,17 @@ import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
 
 const ServicesSection = () => {
+  const navigate = useNavigate();
+  const TestClick = () => {
+    navigate("/test");
+  };
+  const DietClick = () => {
+    navigate("/diet");
+  };
+  const WorkoutClick = () => {
+    navigate("/workout");
+  };
+
   return (
     <section id="services" className="services_wrapper wrapper">
       {
@@ -23,9 +34,9 @@ const ServicesSection = () => {
                     Analyze your reports using Artificial Intelligence for fast
                     and accurate diagnosis of thyroid
                   </p>
-                  <a href="/test" className="main-btn mt-4">
+                  <button className="main-btn mt-4" onClick={TestClick}>
                     Let's go
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -38,9 +49,9 @@ const ServicesSection = () => {
                     Generate a personalized diet plan for your condition using
                     Artificial Intelligence
                   </p>
-                  <a href="/diet" className="main-btn mt-4">
+                  <button className="main-btn mt-4" onClick={DietClick}>
                     Let's go
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -53,9 +64,9 @@ const ServicesSection = () => {
                     Generate a personalized fitness plan for your condition
                     using Artificial Intelligence
                   </p>
-                  <a href="/workout" className="main-btn mt-4">
+                  <button className="main-btn mt-4" onClick={WorkoutClick}>
                     Let's go
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -126,14 +137,6 @@ const ContactSection = () => {
 };
 
 const Loggedin = () => {
-  const navigate = useNavigate();
-
-  const check = async () => {
-    const res = await authApi.access();
-    if (res?.accessToken === "") navigate("/denied");
-  };
-  check();
-
   return (
     <>
       <LoggedHeader />

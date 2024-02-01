@@ -3,12 +3,6 @@ import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
-  const check = async () => {
-    const res = await authApi.access();
-    if (res?.accessToken === "") navigate("/denied");
-  };
-  check();
-  
   const navigate = useNavigate();
   const [udata, setUdata] = useState({
     uname: "",
@@ -52,6 +46,9 @@ const UserProfile = () => {
     navigate("/update");
   };
 
+  const ReturnHome = () => {
+    navigate("/logged");
+  };
 
   return (
     <div className="home" style={{ padding: "50px" }}>
@@ -69,11 +66,12 @@ const UserProfile = () => {
                 Profile
               </h4>
               <a
-                href="/logged"
+                href=""
                 style={{
                   color: "black",
                   textDecoration: "none",
                 }}
+                onClick={ReturnHome}
               >
                 x
               </a>

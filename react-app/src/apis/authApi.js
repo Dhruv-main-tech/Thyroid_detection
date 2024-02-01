@@ -21,9 +21,6 @@ const authApi = {
   gpt: (data_g) => {
     return axiosClient.post("api/v1/auth/gpt", data_g);
   },
-  report: (data_r) => {
-    return axiosClient.post("api/v1/auth/report", data_r);
-  },
   learn: (data_f) => {
     return axiosClient.post("api/v1/auth/learn", data_f);
   },
@@ -51,5 +48,9 @@ const authApi = {
   forgot: (data) => {
     return axiosClient.post("api/v1/auth/forgot", data);
   },
+  gotp:()=>{
+    return axiosClient.get("api/v1/auth/gotp");
+  },
+  
 };
 export default authApi;

@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Update = () => {
   const navigate = useNavigate();
 
-  const check = async () => {
-    const res = await authApi.access();
-    if (res?.accessToken === "") navigate("/denied");
-  };
-  check();
+  
 
 
   const [udata, setUdata] = useState({

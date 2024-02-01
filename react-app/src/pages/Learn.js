@@ -5,12 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Learn = () => {
   const navigate = useNavigate();
 
-  const check = async () => {
-    const res = await authApi.access();
-    if (res?.accessToken === "") navigate("/denied");
-  };
-  check();
-
   const [fileContent, setFileContent] = useState("");
   const [fileName, setFileName] = useState("");
   const [udata, setUdata] = useState({
@@ -35,7 +29,9 @@ const Learn = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("fetching")
       const user = await details();
+      console.log(user)
       setUdata(user);
     };
 
@@ -45,6 +41,7 @@ const Learn = () => {
   useEffect(() => {
     const fetching = async () => {
       try {
+        console.log(`filename:${fileName}`);
         if (fileName !== "") {
           const file = await authApi.learn(fileName);
           setFileContent(file?.content);

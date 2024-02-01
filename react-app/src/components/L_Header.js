@@ -1,7 +1,13 @@
 import React from "react";
 import authApi from "../apis/authApi";
+import { useNavigate } from "react-router-dom";
 
 const LoggedHeader = () => {
+  const navigate = useNavigate();
+
+  const ProfileClick = () => {
+    navigate("/profile");
+  };
   const HandleClick = async () => {
     const status = await authApi.logout("");
     console.log(status);
@@ -23,12 +29,12 @@ const LoggedHeader = () => {
             </li>
           </ul>
           <div>
-            <a
-              href="/profile"
-              className="login_text"
-              style={{ paddingRight: "5px" }}
-            >
-              <button className="main_button" style={{ color: "white" }}>
+            <a className="login_text" style={{ paddingRight: "5px" }}>
+              <button
+                className="main_button"
+                style={{ color: "white" }}
+                onClick={ProfileClick}
+              >
                 Profile
               </button>
             </a>

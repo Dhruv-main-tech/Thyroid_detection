@@ -400,6 +400,38 @@ p {
   display: block;
 }
 
+.user_confirm,
+.forgot {
+  display: none;
+}
+
+.mainpage.active1 .user_confirm {
+  display: block;
+}
+
+.mainpage.active1 .forgot {
+  display: none;
+}
+
+.mainpage.active1 .homepage_n_l {
+  display: none;
+}
+
+.mainpage.active2 .user_confirm {
+  display: none;
+}
+
+.mainpage.active2 .forgot {
+  display: block;
+}
+
+.mainpage.active2 .homepage_n_l {
+  display: none;
+}
+
+
+
+
 .form_close {
   position: absolute;
   top: 10px;

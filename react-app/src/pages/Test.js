@@ -5,17 +5,26 @@ import { useNavigate } from "react-router-dom";
 const Test = () => {
   const navigate = useNavigate();
 
-  /*
-  const check = async () => {
-    const res = await authApi.access();
-    if (res?.accessToken === "") navigate("/denied");
+  const WorkoutClick = () => {
+    navigate("/workout");
   };
-  check();*/
+
+  const DietClick = () => {
+    navigate("/diet");
+  };
+
+  const LearnClick = () => {
+    navigate("/learn");
+  };
+
+  const FormClose = () => {
+    navigate("/logged");
+  };
 
   const handleCheckboxChange = (checkboxName) => {
     setmdata((prev) => ({
       ...prev,
-      [checkboxName]: !prev[checkboxName],
+      [checkboxName]: prev[checkboxName] ? 0 : 1,
     }));
   };
 
@@ -43,23 +52,24 @@ const Test = () => {
   });
 
   const [mdata, setmdata] = useState({
+    uname: udata?.uname,
     age: udata?.age,
-    gender: udata?.gender,
-    "on thyroxine": false,
-    "on antithyroid medication": false,
-    sick: false,
-    pregnant: false,
-    "thyroid surgery": false,
-    "I131 treatment": false,
-    lithium: false,
-    goitre: false,
-    tumor: false,
-    hypopituitary: false,
-    psych: false,
-    TSH: "2.875",
-    T3: "1.25",
-    TT4: "105",
-    FTI: "97.5",
+    gender: 0,
+    "on thyroxine": 0,
+    "on antithyroid medication": 0,
+    sick: 0,
+    pregnant: 0,
+    "thyroid surgery": 0,
+    "I131 treatment": 0,
+    lithium: 0,
+    goitre: 0,
+    tumor: 0,
+    hypopituitary: 0,
+    psych: 0,
+    TSH: 2.875,
+    T3: 1.25,
+    TT4: 105,
+    FTI: 97.5,
   });
 
   const details = async () => {
@@ -85,21 +95,42 @@ const Test = () => {
     setmdata((prev) => ({
       ...prev,
       age: udata?.age,
-      gender: udata?.gender,
+      uname:udata?.uname,
+      gender: udata?.gender === "M" ? 1 : 0,
     }));
   }, [udata]);
 
   const handleSubmit = async () => {
     try {
-      const patient_condition = await authApi.report(mdata);
-      setpdata(patient_condition?.data?.condition);
-      if (patient_condition?.data?.condition === "NEGATIVE") {
+      console.log(mdata);
+      const response = await fetch(
+        "https://thyroid-lab-prediction.onrender.com/predict",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(mdata),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      setpdata(result?.condition);
+
+      
+
+      if (pdata === "NEGATIVE") {
         negative();
       } else {
         Non_negative();
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error:", error.message);
     }
   };
 
@@ -121,12 +152,13 @@ const Test = () => {
               Enter patient details
             </h4>
             <a
-              href="/logged"
+              href=""
               style={{
                 color: "black",
                 textDecoration: "none",
                 paddingLeft: "60px",
               }}
+              onClick={FormClose}
             >
               x
             </a>
@@ -137,7 +169,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> on thyroxine?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["on thyroxine"]}
+                  checked={mdata?.["on thyroxine"] === 1}
                   onChange={() => handleCheckboxChange("on thyroxine")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -149,7 +181,7 @@ const Test = () => {
                 </label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["on antithyroid medication"]}
+                  checked={mdata?.["on antithyroid medication"] === 1}
                   onChange={() =>
                     handleCheckboxChange("on antithyroid medication")
                   }
@@ -160,7 +192,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> sick?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["sick"]}
+                  checked={mdata?.["sick"] === 1}
                   onChange={() => handleCheckboxChange("sick")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -172,7 +204,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> pregnant?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["pregnant"]}
+                  checked={mdata?.["pregnant"] === 1}
                   onChange={() => handleCheckboxChange("pregnant")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -181,7 +213,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> thyroid surgery?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["thyroid surgery"]}
+                  checked={mdata?.["thyroid surgery"] === 1}
                   onChange={() => handleCheckboxChange("thyroid surgery")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -190,7 +222,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> I131 treatment?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["I131 treatment"]}
+                  checked={mdata?.["I131 treatment"] === 1}
                   onChange={() => handleCheckboxChange("I131 treatment")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -202,7 +234,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> lithium?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["lithium"]}
+                  checked={mdata?.["lithium"] === 1}
                   onChange={() => handleCheckboxChange("lithium")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -211,7 +243,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> goitre?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["goitre"]}
+                  checked={mdata?.["goitre"] === 1}
                   onChange={() => handleCheckboxChange("goitre")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -220,7 +252,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> tumor?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["tumor"]}
+                  checked={mdata?.["tumor"] === 1}
                   onChange={() => handleCheckboxChange("tumor")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -229,7 +261,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> psych?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["psych"]}
+                  checked={mdata?.["psych"] === 1}
                   onChange={() => handleCheckboxChange("psych")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -238,7 +270,7 @@ const Test = () => {
                 <label style={{ marginLeft: "10px" }}> hypopituitary?</label>
                 <input
                   type="checkbox"
-                  checked={mdata?.["hypopituitary"]}
+                  checked={mdata?.["hypopituitary"] === 1}
                   onChange={() => handleCheckboxChange("hypopituitary")}
                   style={{ marginLeft: "10px" }}
                 ></input>
@@ -297,27 +329,27 @@ const Test = () => {
           style={{ color: "black", marginTop: "10px" }}
         >
           <div> {pdata} </div>
-          <a href="/learn">
-            <button className="pro_sub_btn">Learn More</button>
-          </a>
-          <a href="/workout">
-            <button className="pro_sub_btn">Generate Workout Plan</button>
-          </a>
-          <a href="/diet">
-            <button className="pro_sub_btn">Generate Diet Plan</button>
-          </a>
+          <button className="pro_sub_btn" onClick={LearnClick}>
+            Learn More
+          </button>
+          <button className="pro_sub_btn" onClick={WorkoutClick}>
+            Generate Workout Plan
+          </button>
+          <button className="pro_sub_btn" onClick={DietClick}>
+            Generate Diet Plan
+          </button>
         </div>
         <div
           className="report_form2"
           style={{ color: "black", marginTop: "10px" }}
         >
           <div> {pdata} </div>
-          <a href="/workout">
-            <button className="pro_sub_btn">Generate Workout Plan</button>
-          </a>
-          <a href="/diet">
-            <button className="pro_sub_btn">Generate Diet Plan</button>
-          </a>
+          <button className="pro_sub_btn" onClick={WorkoutClick}>
+            Generate Workout Plan
+          </button>
+          <button className="pro_sub_btn" onClick={DietClick}>
+            Generate Diet Plan
+          </button>
         </div>
       </div>
     </div>

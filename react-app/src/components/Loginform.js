@@ -43,6 +43,11 @@ const Loginform = () => {
     }
   };
 
+  const HandleForgot = () => {
+    const fc = document.querySelector(".mainpage");
+    fc.classList.add("active1");
+  };
+
   return (
     <div className="form login_form">
       <form className="login_form" onSubmit={handleSubmit}>
@@ -99,7 +104,7 @@ const Loginform = () => {
           />
         </div>
         <div className="option_field">
-          <a className="forgot_pw" href="/confirm">
+          <a className="forgot_pw" href="#" onClick={HandleForgot}>
             Forgot password
           </a>
         </div>
@@ -126,7 +131,7 @@ const Loginform = () => {
           <hr />
         </div>
 
-        <GoogleSignin/>
+        <GoogleSignin />
       </form>
     </div>
   );

@@ -14,16 +14,25 @@ const Confirm = () => {
   });
 
   const HandleClick = async () => {
-    console.log(data)
     const res = await authApi.forgot(data);
     if (res?.success === true) {
-      navigate("/forget");
+      handleSubmit();
     } else {
       setMessage({
         text: res?.msg,
         type: "danger",
       });
     }
+  };
+
+  const handleSubmit = () => {
+    const fc = document.querySelector(".mainpage");
+    fc.classList.remove("active1");
+    fc.classList.add("active2");
+  };
+
+  const ReturnHome = () => {
+    navigate("/");
   };
 
   return (
@@ -42,11 +51,12 @@ const Confirm = () => {
                 Reset
               </h4>
               <a
-                href="/"
+                href=""
                 style={{
                   color: "black",
                   textDecoration: "none",
                 }}
+                onClick={ReturnHome}
               >
                 x
               </a>
