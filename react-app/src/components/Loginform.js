@@ -12,7 +12,7 @@ const Loginform = () => {
 
   const [normal, setnormal] = useState(true);
   const [other, setother] = useState(false);
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
 
   function formClose() {
     const home = document.querySelector("#home");
@@ -37,7 +37,7 @@ const Loginform = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await authApi.login(data);
       const { user, accessToken } = res?.data;
       setAuth({
@@ -51,7 +51,7 @@ const Loginform = () => {
         uname: user?.uname,
       });
       if (res?.check !== " ") {
-        navigate("/testing");
+        navigate("/logged");
       } else {
         navigate("/upprofile");
       }
@@ -60,7 +60,7 @@ const Loginform = () => {
       setMessage({ type: "danger", text: error?.response?.data?.msg });
       console.log(error);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const HandleForgot = () => {
@@ -90,7 +90,7 @@ const Loginform = () => {
             style={{
               paddingLeft: "135px",
               paddingRight: "120px",
-              paddingTop:"80px",
+              paddingTop: "80px",
               color: "black",
             }}
           >

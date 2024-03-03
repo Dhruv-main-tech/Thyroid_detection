@@ -89,7 +89,7 @@ const GoogleSignin = () => {
       });
       if (res?.data?.user?.gender === " ") {
         navigate("/upprofile");
-      } else navigate("/testing");
+      } else navigate("/logged");
     };
     if (userData?.displayName !== "") signin();
   }, [userData]);

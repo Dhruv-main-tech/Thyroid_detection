@@ -28,7 +28,7 @@ const Profile = () => {
         condition: auth?.condition,
         uname: auth?.uname,
       });
-      navigate("/testing");
+      navigate("/logged");
     } catch (error) {
       console.log(error);
     }
