@@ -683,7 +683,7 @@ const Logged = () => {
                   alignItems: "center",
                 }}
               >
-                <div style={{ paddingLeft: "120px", textAlign: "center" }}>
+                <div style={{ paddingLeft: "195px", textAlign: "center" }}>
                   {pdata}
                 </div>
 
