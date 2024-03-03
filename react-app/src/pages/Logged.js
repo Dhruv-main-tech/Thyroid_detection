@@ -173,7 +173,7 @@ const Logged = () => {
   };
   const TestSubmit = async () => {
     try {
-      console.log(mdata);
+      setLoading(true);
       const response = await fetch(
         "https://thyroid-lab-prediction.onrender.com/predict",
         {
@@ -190,7 +190,6 @@ const Logged = () => {
       }
 
       const result = await response.json();
-      console.log(result);
 
       setpdata(result?.condition);
       setAuth({
@@ -212,6 +211,7 @@ const Logged = () => {
     } catch (error) {
       console.error("Error:", error.message);
     }
+    setLoading(false);
   };
   const handleRead = () => {
     if ("speechSynthesis" in window) {
@@ -627,7 +627,7 @@ const Logged = () => {
                   <input type="number" placeholder="Enter FTI levels" />
                 </div>
               </div>
-
+              <LoadingSpinner loading={loading} color="#005599" />
               <button className="pro_sub_btn" onClick={TestSubmit}>
                 Submit
               </button>
@@ -636,7 +636,32 @@ const Logged = () => {
               className="report_form1"
               style={{ color: "black", marginTop: "10px" }}
             >
-              <div> {pdata} </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div style={{ paddingLeft: "120px", textAlign: "center" }}>
+                  {pdata}
+                </div>
+
+                <button
+                  style={{
+                    color: "black",
+                    textDecoration: "none",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    paddingBottom: "20px",
+                  }}
+                  onClick={HomeClick}
+                >
+                  x
+                </button>
+              </div>
+
               <button className="pro_sub_btn" onClick={LearnClick}>
                 Learn More
               </button>
@@ -651,7 +676,31 @@ const Logged = () => {
               className="report_form2"
               style={{ color: "black", marginTop: "10px" }}
             >
-              <div> {pdata} </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div style={{ paddingLeft: "120px", textAlign: "center" }}>
+                  {pdata}
+                </div>
+
+                <button
+                  style={{
+                    color: "black",
+                    textDecoration: "none",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    paddingBottom: "20px",
+                  }}
+                  onClick={HomeClick}
+                >
+                  x
+                </button>
+              </div>
               <button className="pro_sub_btn" onClick={WorkoutClick}>
                 Generate Workout Plan
               </button>
