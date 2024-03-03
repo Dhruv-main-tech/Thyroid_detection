@@ -3,17 +3,11 @@ const authApi = {
   register: (data_s) => {
     return axiosClient.post("api/v1/auth/register", data_s);
   },
-  verify:()=>{
+  verify: () => {
     return axiosClient.get("api/v1/auth/verify");
   },
   login: (data_l) => {
     return axiosClient.post("api/v1/auth/login", data_l);
-  },
-  profile: (data_p) => {
-    return axiosClient.post("api/v1/auth/profile", data_p);
-  },
-  disp: (d) => {
-    return axiosClient.get("api/v1/auth/disp", d);
   },
   update: (data_u) => {
     return axiosClient.post("api/v1/auth/update", data_u);
@@ -23,9 +17,6 @@ const authApi = {
   },
   learn: (data_f) => {
     return axiosClient.post("api/v1/auth/learn", data_f);
-  },
-  logout: (data_o) => {
-    return axiosClient.get("api/v1/auth/logout", data_o);
   },
   otp: () => {
     return axiosClient.post("api/v1/auth/otp");
@@ -42,15 +33,14 @@ const authApi = {
   googlesignin: (data) => {
     return axiosClient.post("api/v1/auth/googlesignin", data);
   },
-  access: () => {
-    return axiosClient.get("api/v1/auth/access");
-  },
   forgot: (data) => {
     return axiosClient.post("api/v1/auth/forgot", data);
   },
-  gotp:()=>{
+  gotp: () => {
     return axiosClient.get("api/v1/auth/gotp");
   },
-  
+  profile: (data_p) => {
+    return axiosClient.post("api/v1/auth/profile", data_p);
+  },
 };
 export default authApi;

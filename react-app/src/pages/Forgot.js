@@ -13,6 +13,7 @@ const Forgot = () => {
     const receive_otp = async () => {
       try {
         const res = await authApi.otp();
+        console.log(res?.otp)
         setOtp(res?.otp);
       } catch (error) {
         console.error("Error in receive_otp:", error);

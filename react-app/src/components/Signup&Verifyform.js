@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import authApi from "../apis/authApi";
-import GoogleSignup from "./Signupgoogle";
+import GoogleSignup from "./Signupothers";
+import LoadingSpinner from "../components/Spinner";
+
 
 const SignupVerifyform = () => {
   const [data, setData] = useState({
@@ -16,6 +18,9 @@ const SignupVerifyform = () => {
   const [Vdata, setVData] = useState({
     input: "",
   });
+
+  const [normal, setnormal] = useState(true);
+  const [other, setother] = useState(false);
 
   function LoginClick() {
     const formContainer = document.querySelector(".form_container");
@@ -52,6 +57,8 @@ const SignupVerifyform = () => {
     text: "Otp sent to your mail",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (data?.password.length < 8) {
@@ -77,6 +84,7 @@ const SignupVerifyform = () => {
     }
 
     try {
+      setLoading(true);
       await authApi.register(data);
 
       setMessage({
@@ -90,6 +98,7 @@ const SignupVerifyform = () => {
       });
     }
     receive_otp();
+    setLoading(false);
     VerifyClick();
   };
 
@@ -113,6 +122,16 @@ const SignupVerifyform = () => {
     }
   };
 
+  const OtherClick = () => {
+    setnormal(false);
+    setother(true);
+  };
+
+  const NormalClick = () => {
+    setother(false);
+    setnormal(true);
+  };
+
   return (
     <div>
       <div className="form signup_form">
@@ -127,6 +146,7 @@ const SignupVerifyform = () => {
               style={{
                 paddingLeft: "135px",
                 paddingRight: "120px",
+                paddingTop: "40px",
                 color: "black",
               }}
             >
@@ -146,78 +166,90 @@ const SignupVerifyform = () => {
           {message && message?.text && (
             <Alert variant={message?.type}>{message?.text}</Alert>
           )}
-          <div className="input_box">
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              required
-              value={data?.email}
-              onChange={(e) =>
-                setData((prev) => ({ ...prev, email: e.target.value }))
-              }
-            />
-            <i className="uil uil-envelope-alt email"></i>
-          </div>
-          <div className="input_box">
-            <input
-              type="text"
-              placeholder="Create Username"
-              required
-              value={data?.uname}
-              onChange={(e) =>
-                setData((prev) => ({ ...prev, uname: e.target.value }))
-              }
-            />
-          </div>
-          <div className="input_box">
-            <input
-              type="password"
-              placeholder="Create password"
-              required
-              value={data?.password}
-              onChange={(e) =>
-                setData((prev) => ({ ...prev, password: e.target.value }))
-              }
-            />
-          </div>
-          <div className="input_box">
-            <input
-              type="password"
-              placeholder="Confirm password"
-              required
-              value={data?.confirmPassword}
-              onChange={(e) =>
-                setData((prev) => ({
-                  ...prev,
-                  confirmPassword: e.target.value,
-                }))
-              }
-            />
-          </div>
-
-          <button className="signup_button">Signup Now</button>
-
-          <div className="login_signup">
-            Already have an account?{" "}
-            <a
-              id="login"
-              onClick={LoginClick}
-              style={{ color: "blue" }}
-              href="#"
-            >
-              {" "}
-              Login
-            </a>
-          </div>
-
-          <div className="line">
-            <hr />
-            <div className="or">or</div>
-            <hr />
-          </div>
-
-          <GoogleSignup />
+          
+          {normal && (
+            <div className="normal">
+              <div className="input_box">
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email"
+                  required
+                  value={data?.email}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, email: e.target.value }))
+                  }
+                />
+                <i className="uil uil-envelope-alt email"></i>
+              </div>
+              <div className="input_box">
+                <input
+                  type="text"
+                  placeholder="Create Username"
+                  required
+                  value={data?.uname}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, uname: e.target.value }))
+                  }
+                />
+              </div>
+              <div className="input_box">
+                <input
+                  type="password"
+                  placeholder="Create password"
+                  required
+                  value={data?.password}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, password: e.target.value }))
+                  }
+                />
+              </div>
+              <div className="input_box">
+                <input
+                  type="password"
+                  placeholder="Confirm password"
+                  required
+                  value={data?.confirmPassword}
+                  onChange={(e) =>
+                    setData((prev) => ({
+                      ...prev,
+                      confirmPassword: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              <LoadingSpinner loading={loading} color="#005599" />
+              <button className="signup_button">Signup Now</button>
+              <div className="login_signup">
+                Already have an account?{" "}
+                <a
+                  id="login"
+                  onClick={LoginClick}
+                  style={{ color: "blue" }}
+                  href="#"
+                >
+                  {" "}
+                  Login
+                </a>
+              </div>
+              <div className="line">
+                <hr />
+                <div className="or">or</div>
+                <hr />
+              </div>
+              <button className="other" onClick={OtherClick}>
+                Other options
+              </button>
+            </div>
+          )}
+          {other && (
+            <div>
+              <GoogleSignup />
+              <button className="google" onClick={NormalClick}>
+                Back
+              </button>
+            </div>
+          )}
         </form>
       </div>
       <div className="form verify_form">

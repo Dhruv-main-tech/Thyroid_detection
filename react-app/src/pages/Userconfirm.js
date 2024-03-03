@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 const Confirm = () => {
   const navigate = useNavigate();
 
-  const [data, setData] = useState({ user: "" });
+  const [data, setData] = useState({ l_user: "" });
 
   const [Message, setMessage] = useState({
     text: "",
@@ -26,9 +26,7 @@ const Confirm = () => {
   };
 
   const handleSubmit = () => {
-    const fc = document.querySelector(".mainpage");
-    fc.classList.remove("active1");
-    fc.classList.add("active2");
+    navigate("/forgot")
   };
 
   const ReturnHome = () => {

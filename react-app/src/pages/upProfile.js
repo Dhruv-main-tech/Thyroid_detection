@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import authApi from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { auth, setAuth } = useContext(AuthContext);
 
   const [data, setData] = useState({
     age: "",
@@ -16,7 +18,17 @@ const Profile = () => {
     e.preventDefault();
     try {
       await authApi.profile(data);
-      navigate("/logged");
+      setAuth({
+        accessToken: auth?.accessToken,
+        age: data?.age,
+        weight: data?.weight,
+        height: data?.height,
+        gender: data?.gender,
+        email: auth?.email,
+        condition: auth?.condition,
+        uname: auth?.uname,
+      });
+      navigate("/testing");
     } catch (error) {
       console.log(error);
     }

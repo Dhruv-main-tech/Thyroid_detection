@@ -5,9 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Update = () => {
   const navigate = useNavigate();
 
-  
-
-
   const [udata, setUdata] = useState({
     uname: "",
     email: "",
