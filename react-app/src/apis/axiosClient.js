@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  //baseURL: "https://thyroid-lab.onrender.com", //deployment
-  baseURL: "http://localhost:8080/",
+  baseURL: "https://thyroid-lab.onrender.com", 
+  //baseURL: "http://localhost:8080/",
   headers: {
     "Content-Type": "application/json",
   },
