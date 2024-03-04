@@ -29,6 +29,8 @@ const Logged = () => {
     setworkout(false);
     setprofile(false);
     setedit(false);
+    settestn(false);
+    setana(false);
     sethome(true);
   };
   const TestClick = () => {
