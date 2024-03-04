@@ -19,6 +19,8 @@ const Logged = () => {
   const [learn, setlearn] = useState(false);
   const [profile, setprofile] = useState(false);
   const [edit, setedit] = useState(false);
+  const [testn, settestn] = useState(false);
+  const [ana, setana] = useState(false);
 
   //Navigation buttons
   const HomeClick = () => {
@@ -54,6 +56,14 @@ const Logged = () => {
   const EditClick = () => {
     setprofile(false);
     setedit(true);
+  };
+  const TestnClick = () => {
+    settest(false);
+    settestn(true);
+  };
+  const AnalyzeClick = () => {
+    settestn(false);
+    setana(true);
   };
   const LogoutClick = () => {
     setAuth({
@@ -108,6 +118,13 @@ const Logged = () => {
     uname: auth?.uname,
     email: auth?.email,
   });
+  const [ntest, setntest] = useState({
+    age: auth?.age,
+    weight: auth?.weight,
+    height: auth?.height,
+    gender: auth?.gender,
+  });
+  const [anadata, setanadata] = useState("");
   let utterance;
 
   //Utility functions
@@ -250,6 +267,21 @@ const Logged = () => {
       HomeClick();
     } catch (error) {
       console.log(error);
+    }
+  };
+  const nTestSubmit = async () => {
+    setLoading(true);
+    const user_prompt = `give me an analysis on the chances of a thyroid disorder of a ${ntest?.age} year old ${ntest?.gender} of height ${ntest?.height}cm and weight ${ntest?.weight}kgs avoid showing the calculations`;
+    try {
+      const uname = auth?.uname;
+      const res = await authApi.gpt({ user_prompt, uname });
+      setanadata(res.data);
+      setTextToRead(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+      AnalyzeClick();
     }
   };
 
@@ -628,8 +660,20 @@ const Logged = () => {
                 </div>
               </div>
               <LoadingSpinner loading={loading} color="#005599" />
-              <button className="pro_sub_btn" onClick={TestSubmit}>
+              <button
+                className="pro_sub_btn"
+                onClick={TestSubmit}
+                style={{ marginTop: "0px", padding: "8px" }}
+              >
                 Submit
+              </button>
+              <p style={{ marginBottom: "2px" }}>Don't have medical data?</p>
+              <button
+                className="pro_sub_btn"
+                style={{ marginTop: "0px", padding: "8px" }}
+                onClick={TestnClick}
+              >
+                Click here
               </button>
             </div>
             <div
@@ -716,7 +760,7 @@ const Logged = () => {
         <div className="home">
           <div
             className="form_container2"
-            style={{ height: "540px", maxWidth: "800px" }}
+            style={{ height: "auto", maxWidth: "800px" }}
           >
             <button
               style={{
@@ -766,7 +810,7 @@ const Logged = () => {
         <div className="home">
           <div
             className="form_container2"
-            style={{ height: "540px", maxWidth: "800px" }}
+            style={{ height: "auto", maxWidth: "800px" }}
           >
             <button
               style={{
@@ -999,6 +1043,241 @@ const Logged = () => {
                   Submit
                 </button>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Test without medical data */}
+      {testn && (
+        <div className="home">
+          <div
+            className="form_container2"
+            style={{ height: "auto", maxWidth: "300px" }}
+          >
+            <div className="details_form">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <h4 style={{ paddingLeft: "10px", textAlign: "center" }}>
+                  Enter below details
+                </h4>
+
+                <button
+                  style={{
+                    color: "black",
+                    textDecoration: "none",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    paddingBottom: "20px",
+                  }}
+                  onClick={HomeClick}
+                >
+                  x
+                </button>
+              </div>
+
+              <div>
+                <label
+                  style={{
+                    display: "flex",
+                    paddingLeft: "20px",
+                    paddingTop: "10px",
+                  }}
+                >
+                  Age
+                </label>
+              </div>
+              <div
+                className="input_box"
+                style={{ display: "flex" }}
+                value={ntest?.age}
+                onChange={(e) =>
+                  setntest((prev) => ({ ...prev, age: e.target.value }))
+                }
+              >
+                <input type="number" placeholder="Enter age" />
+              </div>
+              <div>
+                <label
+                  style={{
+                    display: "flex",
+                    paddingLeft: "20px",
+                    paddingTop: "10px",
+                  }}
+                >
+                  Height in cms
+                </label>
+              </div>
+              <div
+                className="input_box"
+                style={{ display: "flex" }}
+                value={ntest?.height}
+                onChange={(e) =>
+                  setntest((prev) => ({ ...prev, height: e.target.value }))
+                }
+              >
+                <input type="number" placeholder="Enter height" />
+              </div>
+              <div>
+                <label
+                  style={{
+                    display: "flex",
+                    paddingLeft: "20px",
+                    paddingTop: "10px",
+                  }}
+                >
+                  Weight in kgs
+                </label>
+              </div>
+              <div
+                className="input_box"
+                style={{ display: "flex" }}
+                value={ntest?.weight}
+                onChange={(e) =>
+                  setntest((prev) => ({ ...prev, weight: e.target.value }))
+                }
+              >
+                <input type="number" placeholder="Enter weight" />
+              </div>
+              <div className="gender">
+                <div>
+                  <label
+                    style={{
+                      display: "flex",
+                      paddingLeft: "20px",
+                      paddingBottom: "12px",
+                      paddingTop: "10px",
+                    }}
+                  >
+                    Gender
+                  </label>
+                </div>
+                <div
+                  className="gender-selection"
+                  style={{
+                    alignItems: "center",
+                    display: "flex",
+                  }}
+                  required
+                >
+                  <div
+                    className="gender-option"
+                    style={{ paddingLeft: "20px", marginBottom: "20px" }}
+                  >
+                    <input
+                      type="radio"
+                      id="male"
+                      value={"male"}
+                      name="gender"
+                      onChange={(e) =>
+                        setntest((prev) => ({
+                          ...prev,
+                          gender: e.target.value,
+                        }))
+                      }
+                    ></input>
+                    <label htmlFor="male" style={{ paddingRight: "20px" }}>
+                      Male
+                    </label>
+                  </div>
+                  <div
+                    className="gender-option"
+                    style={{ marginBottom: "20px" }}
+                  >
+                    <input
+                      type="radio"
+                      id="femle"
+                      value={"female"}
+                      name="gender"
+                      onChange={(e) =>
+                        setntest((prev) => ({
+                          ...prev,
+                          gender: e.target.value,
+                        }))
+                      }
+                    ></input>
+                    <label htmlFor="female" style={{ paddingRight: "20px" }}>
+                      Female
+                    </label>
+                  </div>
+                  <div
+                    className="gender-option"
+                    style={{ marginBottom: "20px" }}
+                  >
+                    <input
+                      type="radio"
+                      id="other"
+                      value={"others"}
+                      name="gender"
+                      onChange={(e) =>
+                        setntest((prev) => ({
+                          ...prev,
+                          gender: e.target.value,
+                        }))
+                      }
+                    ></input>
+                    <label htmlFor="other" style={{ paddingRight: "20px" }}>
+                      Other
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <LoadingSpinner loading={loading} color="#005599" />
+                <button
+                  className="pro_sub_btn"
+                  onClick={nTestSubmit}
+                  style={{ marginTop: "0px", padding: "8px" }}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {ana && (
+        <div className="home">
+          <div
+            className="form_container2"
+            style={{ height: "auto", maxWidth: "800px" }}
+          >
+            <button
+              style={{
+                color: "black",
+                textDecoration: "none",
+                paddingLeft: "700px",
+                border: "none",
+                background: "none",
+                cursor: "pointer",
+              }}
+              onClick={HomeClick}
+            >
+              x
+            </button>
+
+            <div className="form profile_form">
+              <div className="chatgpt">
+                <div style={{ display: "flex" }}>
+                  <button className="pro_sub_btn" onClick={HomeClick}>
+                    Home
+                  </button>
+                  <button className="pro_sub_btn" onClick={handleRead}>
+                    Read
+                  </button>
+                  <button className="pro_sub_btn" onClick={handleStop}>
+                    Stop
+                  </button>
+                </div>
+              </div>
+              <div className="generate">
+                <h6>{anadata}</h6>
+              </div>
             </div>
           </div>
         </div>
